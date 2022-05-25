@@ -82,6 +82,14 @@ app.post("/create", validateUser, (req, res) => {
   res.redirect("/");
 })
 
+
+// Create Interesting
+app.get("/create-interesting", csrfProtection, (req, res) => {
+  res.render("create-interesting-user", { title: "Create Interesting User", csrfToken: req.csrfToken() })
+})
+
+app.post("/create-interesting")
+
 const users = [
   {
     id: 1,

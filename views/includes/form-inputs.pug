@@ -1,0 +1,12 @@
+mixin createUser()
+    input(type="hidden" name="_csrf" value=csrfToken)
+    label First Name
+    input(type="text" name="firstName" value=firstName)
+    label Last Name
+    input(type="text" name="lastName" value=lastName)
+    label Email
+    input(type="email" name="email" value=email)
+    label Password
+    input(type="password" name="password" value=password)
+    label Confirmed Password
+    input(type="password" name="confirmedPassword" value=confirmedPassword)
