@@ -1,0 +1,31 @@
+extends layout.pug
+block content
+  nav
+    a(href="/") Home
+    a(href="/create") Create Normal user
+    a(href="/create-interesting") Create interesting user
+  table
+    h2 Existing Users
+    thead
+        tr
+          th id
+          th First Name
+          th Last Name
+          th Email
+          th Age
+          th Favorite Beatle
+          th Likes Ice Cream
+    tbody
+      each user in users
+        tr
+
+          td #{user.id}
+          td #{user.firstName}
+          td #{user.lastName}
+          td #{user.email}
+            //-if (user.age)
+          td #{user.age}
+            //- if (user.favoriteBeatle)
+          td #{user.favoriteBeatle}
+            //- if (user.likesIceCream)
+          td #{user.likesIceCream}
