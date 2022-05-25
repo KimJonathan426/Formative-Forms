@@ -20,7 +20,66 @@ app.get("/", (req, res) => {
 });
 
 app.get("/create", csrfProtection, (req, res) => {
-  res.render("create-normal-user", { users, title: "User Form", csrfToken: req.csrfToken() })
+  res.render("create-normal-user", { title: "User Form", csrfToken: req.csrfToken() })
+})
+
+const validateUser = (req, res, next) => {
+  const { firstName, lastName, email, password, confirmedPassword } = req.body;
+  const errors = [];
+
+  if (!firstName) {
+    errors.push("Please provide a first name.")
+  }
+
+  if (!lastName) {
+    errors.push("Please provide a last name.")
+  }
+
+  if (!email) {
+    errors.push("Please provide an email.")
+  }
+
+  if (!password) {
+    errors.push("Please provide a password.")
+  }
+
+  if (password !== confirmedPassword) {
+    errors.push("The provided values for the password and password confirmation fields did not match.")
+  }
+
+  req.errors = errors;
+  next();
+}
+
+
+app.post("/create", validateUser, (req, res) => {
+  const { firstName, lastName, email, password, confirmedPassword } = req.body;
+  if (req.errors.length > 0) {
+    res.render("create-normal-user", {
+      title: "User Form",
+      errors: req.errors,
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmedPassword
+    })
+    return;
+  }
+
+  const user = {
+    id: users[users.length - 1].id + 1,
+    firstName,
+    lastName,
+    email,
+    password,
+    confirmedPassword
+  };
+
+  // console.log(users[users.length - 1].id)
+
+  users.push(user);
+  res.redirect("/");
 })
 
 const users = [
